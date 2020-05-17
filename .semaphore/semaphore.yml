@@ -17,7 +17,7 @@ blocks:
             - 'docker push $DOCKER_REGISTRY_URL/semaphore-demo-cicd-kubernetes:$SEMAPHORE_WORKFLOW_ID'
       env_vars:
         - name: DOCKER_REGISTRY_URL
-          value: docker.io
+          value: docker.io/joostholslag
       secrets:
         - name: docker
   - name: TEST
