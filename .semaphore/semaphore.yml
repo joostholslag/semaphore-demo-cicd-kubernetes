@@ -17,11 +17,13 @@ blocks:
             - 'docker push SEMAPHORE_REGISTRY_URL/semaphore-demo-cicd-kubernetes:$SEMAPHORE_WORKFLOW_ID'
       env_vars:
         - name: SEMAPHORE_REGISTRY_URL
-          value: DOCKER_REGISTRY_URL
+          value: $DOCKER_REGISTRY_URL
         - name: SEMAPHORE_REGISTRY_PASSWORD
-          value: DOCKER_PASSWORD
+          value: $DOCKER_PASSWORD
         - name: SEMAPHORE_REGISTRY_USERNAME
-          value: DOCKER_USERNAME
+          value: $DOCKER_USERNAME
+      secrets:
+        - name: 'docker '
   - name: TEST
     task:
       prologue:
