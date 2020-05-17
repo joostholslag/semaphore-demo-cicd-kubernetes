@@ -15,7 +15,9 @@ blocks:
             - 'docker pull $SEMAPHORE_REGISTRY_URL/semaphore-demo-cicd-kubernetes:latest ||true'
             - 'docker build --cache-from  $SEMAPHORE_REGISTRTRY_URL/semaphore-demo-cicd-kubernetes:latest -t $SEMAPHORE_REGISTRY_URL/semaphore-demo-cicd-kubernetes:$SEMAPHORE_WORKFLOW_ID .'
             - 'docker push SEMAPHORE_REGISTRY_URL/semaphore-demo-cicd-kubernetes:$SEMAPHORE_WORKFLOW_ID'
-      env_vars: []
+      env_vars:
+        - name: $SEMAPHORE_REGISTRY_URL
+          value: 'https://index.docker.io/v1/'
       secrets:
         - name: 'docker '
   - name: TEST
