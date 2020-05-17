@@ -13,8 +13,8 @@ blocks:
             - checkout
             - docker login -u $DOCKER_REGISTRY_USERNAME -p $DOCKER_REGISTRY_PASSWORD $DOCKER_REGISTRY_URL
             - 'docker pull $DOCKER_REGISTRY_URL/semaphore-demo-cicd-kubernetes:latest ||true'
-            - 'docker build --cache-from  $SEMAPHORE_REGISTRTRY_URL/semaphore-demo-cicd-kubernetes:latest -t $DOCKER_REGISTRY_URL/semaphore-demo-cicd-kubernetes:$SEMAPHORE_WORKFLOW_ID .'
-            - 'docker push SEMAPHORE_REGISTRY_URL/semaphore-demo-cicd-kubernetes:$SEMAPHORE_WORKFLOW_ID'
+            - 'docker build --cache-from  $DOCKER_REGISTRY_URL/semaphore-demo-cicd-kubernetes:latest -t $DOCKER_REGISTRY_URL/semaphore-demo-cicd-kubernetes:$SEMAPHORE_WORKFLOW_ID .'
+            - 'docker push $DOCKER_REGISTRY_URL/semaphore-demo-cicd-kubernetes:$SEMAPHORE_WORKFLOW_ID'
       env_vars: []
       secrets:
         - name: docker
