@@ -19,7 +19,7 @@ blocks:
         - name: $DOCKER_REGISTRY_URL
           value: 'https://index.docker.io/v1/'
       secrets:
-        - name: 'docker '
+        - name: docker
   - name: TEST
     task:
       prologue:
