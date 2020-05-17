@@ -11,12 +11,12 @@ blocks:
         - name: docker build
           commands:
             - checkout
-            - docker login -u $SEMAPHORE_REGISTRY_USERNAME -p $SEMAPHORE_REGISTRY_PASSWORD $SEMAPHORE_REGISTRY_URL
-            - 'docker pull $SEMAPHORE_REGISTRY_URL/semaphore-demo-cicd-kubernetes:latest ||true'
-            - 'docker build --cache-from  $SEMAPHORE_REGISTRTRY_URL/semaphore-demo-cicd-kubernetes:latest -t $SEMAPHORE_REGISTRY_URL/semaphore-demo-cicd-kubernetes:$SEMAPHORE_WORKFLOW_ID .'
+            - docker login -u $DOCKER_REGISTRY_USERNAME -p $DOCKER_REGISTRY_PASSWORD $DOCKER_REGISTRY_URL
+            - 'docker pull $DOCKER_REGISTRY_URL/semaphore-demo-cicd-kubernetes:latest ||true'
+            - 'docker build --cache-from  $SEMAPHORE_REGISTRTRY_URL/semaphore-demo-cicd-kubernetes:latest -t $DOCKER_REGISTRY_URL/semaphore-demo-cicd-kubernetes:$SEMAPHORE_WORKFLOW_ID .'
             - 'docker push SEMAPHORE_REGISTRY_URL/semaphore-demo-cicd-kubernetes:$SEMAPHORE_WORKFLOW_ID'
       env_vars:
-        - name: $SEMAPHORE_REGISTRY_URL
+        - name: $DOCKER_REGISTRY_URL
           value: 'https://index.docker.io/v1/'
       secrets:
         - name: 'docker '
@@ -24,17 +24,17 @@ blocks:
     task:
       prologue:
         commands:
-          - docker login -u $SEMAPHORE_REGISTRY_USERNAME -p $SEMAPHORE_REGISTRY_PASSWORD $SEMAPHORE_REGISTRY_URL
-          - 'docker pull $SEMAPHORE_REGISTRY_URL/semaphore-demo-cicd-kubernetes:l$SEMAPHORE_WORKFLOW_ID'
+          - docker login -u $DOCKER_REGISTRY_USERNAME -p $DOCKER_REGISTRY_PASSWORD $DOCKER_REGISTRY_URL
+          - 'docker pull $DOCKER_REGISTRY_URL/semaphore-demo-cicd-kubernetes:l$SEMAPHORE_WORKFLOW_ID'
       jobs:
         - name: Unit test
           commands:
-            - 'docker run -it $SEMAPHORE_REGISTRY_URL/semaphore-demo-cicd-kubernetes:$SEMAPHORE_WORKFLOW_ID npm run lint'
+            - 'docker run -it $DOCKER_REGISTRY_URL/semaphore-demo-cicd-kubernetes:$SEMAPHORE_WORKFLOW_ID npm run lint'
         - name: Functional test
           commands:
             - sem-service start postgres
-            - 'docker run --net=host -it $SEMAPHORE_REGISTRY_URL/semaphore-demo-cicd-kubernetes:$SEMAPHORE_WORKFLOW_ID npm run ping'
-            - 'docker run --net=host -it $SEMAPHORE_REGISTRY_URL/semaphore-demo-cicd-kubernetes:$SEMAPHORE_WORKFLOW_ID npm run migrate'
+            - 'docker run --net=host -it $DOCKER_REGISTRY_URL/semaphore-demo-cicd-kubernetes:$SEMAPHORE_WORKFLOW_ID npm run ping'
+            - 'docker run --net=host -it $DOCKER_REGISTRY_URL/semaphore-demo-cicd-kubernetes:$SEMAPHORE_WORKFLOW_ID npm run migrate'
         - name: Integration test
           commands: []
   - name: Push
@@ -42,7 +42,7 @@ blocks:
       jobs:
         - name: 'Job #1'
           commands:
-            - docker login -u $SEMAPHORE_REGISTRY_USERNAME -p $SEMAPHORE_REGISTRY_PASSWORD $SEMAPHORE_REGISTRY_URL
-            - 'docker pull $SEMAPHORE_REGISTRY_URL/semaphore-demo-cicd-kubernetes:$SEMAPHORE_WORKFLOW_ID'
-            - 'docker tag $SEMAPHORE_REGISTRY_URL/semaphore-demo-cicd-kubernetes:$SEMAPHORE_WORKFLOW_ID $SEMAPHORE_REGISTRY_URL/semaphore-demo-cicd-kubernetes:latest'
-            - 'docker push $SEMAPHORE_REGISTRY_URL/semaphore-demo-cicd-kubernetes:latest'
+            - docker login -u $DOCKER_REGISTRY_USERNAME -p $DOCKER_REGISTRY_PASSWORD $DOCKER_REGISTRY_URL
+            - 'docker pull $DOCKER_REGISTRY_URL/semaphore-demo-cicd-kubernetes:$SEMAPHORE_WORKFLOW_ID'
+            - 'docker tag $DOCKER_REGISTRY_URL/semaphore-demo-cicd-kubernetes:$SEMAPHORE_WORKFLOW_ID $DOCKER_REGISTRY_URL/semaphore-demo-cicd-kubernetes:latest'
+            - 'docker push $DOCKER_REGISTRY_URL/semaphore-demo-cicd-kubernetes:latest'
