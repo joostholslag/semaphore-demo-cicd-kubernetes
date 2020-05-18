@@ -12,12 +12,12 @@ blocks:
           commands:
             - checkout
             - docker login -u $DOCKER_REGISTRY_USERNAME -p $DOCKER_REGISTRY_PASSWORD $DOCKER_REGISTRY_URL
-            - 'docker pull $DOCKER_REGISTRY_URL/semaphore-demo-cicd-kubernetes:latest ||true'
-            - 'docker build --cache-from  $DOCKER_REGISTRY_URL/semaphore-demo-cicd-kubernetes:latest -t $DOCKER_REGISTRY_URL/semaphore-demo-cicd-kubernetes:v123 .'
-            - 'docker push $DOCKER_REGISTRY_URL/semaphore-demo-cicd-kubernetes:v123'
+            - 'docker pull $DOCKER_REGISTRY_URL/joostholslag/semaphore-demo-cicd-kubernetes:latest ||true'
+            - 'docker build --cache-from  $DOCKER_REGISTRY_URL/joostholslag/semaphore-demo-cicd-kubernetes:latest -t $DOCKER_REGISTRY_URL/semaphore-demo-cicd-kubernetes:v123 .'
+            - 'docker push $DOCKER_REGISTRY_URL/joostholslag/semaphore-demo-cicd-kubernetes:v123'
       env_vars:
         - name: DOCKER_REGISTRY_URL
-          value: docker.io/joostholslag
+          value: docker.io
       secrets:
         - name: docker
   - name: TEST
