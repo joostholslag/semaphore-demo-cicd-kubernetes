@@ -25,16 +25,16 @@ blocks:
       prologue:
         commands:
           - docker login -u $DOCKER_REGISTRY_USERNAME -p $DOCKER_REGISTRY_PASSWORD $DOCKER_REGISTRY_URL
-          - 'docker pull $DOCKER_REGISTRY_URL/semaphore-demo-cicd-kubernetes:l$SEMAPHORE_WORKFLOW_ID'
+          - 'docker pull $DOCKER_REGISTRY_URL/joostholslag/semaphore-demo-cicd-kubernetes/:l$SEMAPHORE_WORKFLOW_ID'
       jobs:
         - name: Unit test
           commands:
-            - 'docker run -it $DOCKER_REGISTRY_URL/semaphore-demo-cicd-kubernetes:$SEMAPHORE_WORKFLOW_ID npm run lint'
+            - 'docker run -it $DOCKER_REGISTRY_URL/joostholslag/semaphore-demo-cicd-kubernetes:$SEMAPHORE_WORKFLOW_ID npm run lint'
         - name: Functional test
           commands:
             - sem-service start postgres
-            - 'docker run --net=host -it $DOCKER_REGISTRY_URL/semaphore-demo-cicd-kubernetes:$SEMAPHORE_WORKFLOW_ID npm run ping'
-            - 'docker run --net=host -it $DOCKER_REGISTRY_URL/semaphore-demo-cicd-kubernetes:$SEMAPHORE_WORKFLOW_ID npm run migrate'
+            - 'docker run --net=host -it $DOCKER_REGISTRY_URL/joostholslag/semaphore-demo-cicd-kubernetes/:$SEMAPHORE_WORKFLOW_ID npm run ping'
+            - 'docker run --net=host -it $DOCKER_REGISTRY_URL/joostholslag/semaphore-demo-cicd-kubernetes/:$SEMAPHORE_WORKFLOW_ID npm run migrate'
         - name: Integration test
           commands: []
   - name: Push
@@ -43,6 +43,6 @@ blocks:
         - name: 'Job #1'
           commands:
             - docker login -u $DOCKER_REGISTRY_USERNAME -p $DOCKER_REGISTRY_PASSWORD $DOCKER_REGISTRY_URL
-            - 'docker pull $DOCKER_REGISTRY_URL/semaphore-demo-cicd-kubernetes:$SEMAPHORE_WORKFLOW_ID'
-            - 'docker tag $DOCKER_REGISTRY_URL/semaphore-demo-cicd-kubernetes:$SEMAPHORE_WORKFLOW_ID $DOCKER_REGISTRY_URL/semaphore-demo-cicd-kubernetes:latest'
-            - 'docker push $DOCKER_REGISTRY_URL/semaphore-demo-cicd-kubernetes:latest'
+            - 'docker pull $DOCKER_REGISTRY_URL/joostholslag/semaphore-demo-cicd-kubernetes/:$SEMAPHORE_WORKFLOW_ID'
+            - 'docker tag $DOCKER_REGISTRY_URL/joostholslag/semaphore-demo-cicd-kubernetes/:$SEMAPHORE_WORKFLOW_ID $DOCKER_REGISTRY_URL/joostholslag/semaphore-demo-cicd-kubernetes/:latest'
+            - 'docker push $DOCKER_REGISTRY_URL/joostholslag/semaphore-demo-cicd-kubernetes/:latest'
