@@ -50,9 +50,9 @@ blocks:
         - name: 'Job #1'
           commands:
             - docker login -u $DOCKER_REGISTRY_USERNAME -p $DOCKER_REGISTRY_PASSWORD $DOCKER_REGISTRY_URL
-            - 'docker pull $DOCKER_REGISTRY_URL/joostholslag/semaphore-demo-cicd-kubernetes/:$SEMAPHORE_WORKFLOW_ID'
-            - 'docker tag $DOCKER_REGISTRY_URL/joostholslag/semaphore-demo-cicd-kubernetes/:$SEMAPHORE_WORKFLOW_ID $DOCKER_REGISTRY_URL/joostholslag/semaphore-demo-cicd-kubernetes/:latest'
-            - 'docker push $DOCKER_REGISTRY_URL/joostholslag/semaphore-demo-cicd-kubernetes/:latest'
+            - 'docker pull $DOCKER_REGISTRY_URL/joostholslag/semaphore-demo-cicd-kubernetes:$SEMAPHORE_WORKFLOW_ID'
+            - 'docker tag $DOCKER_REGISTRY_URL/joostholslag/semaphore-demo-cicd-kubernetes:$SEMAPHORE_WORKFLOW_ID $DOCKER_REGISTRY_URL/joostholslag/semaphore-demo-cicd-kubernetes:latest'
+            - 'docker push $DOCKER_REGISTRY_URL/joostholslag/semaphore-demo-cicd-kubernetes:latest'
       secrets:
         - name: docker
       env_vars:
