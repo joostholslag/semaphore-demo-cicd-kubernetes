@@ -42,7 +42,7 @@ blocks:
       secrets:
         - name: docker
       env_vars:
-        - name: $DOCKER_REGISTRY_URL
+        - name: DOCKER_REGISTRY_URL
           value: docker.io
   - name: Push
     task:
@@ -56,5 +56,5 @@ blocks:
       secrets:
         - name: docker
       env_vars:
-        - name: $DOCKER_REGISTRY_URL
+        - name: DOCKER_REGISTRY_URL
           value: docker.io
