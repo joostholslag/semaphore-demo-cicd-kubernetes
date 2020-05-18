@@ -37,7 +37,7 @@ blocks:
             - 'docker run --net=host -it $DOCKER_REGISTRY_URL/joostholslag/semaphore-demo-cicd-kubernetes:$SEMAPHORE_WORKFLOW_ID npm run migrate'
         - name: Integration test
           commands:
-            - sem service start postgres
+            - sem-service start postgres
             - 'docker run --net=host -it $DOCKER_REGISTRY_URL/joostholslag/semaphore-demo-cicd-kubernetes:$SEMAPHORE_WORKFLOW_ID npm run test'
       secrets:
         - name: docker
