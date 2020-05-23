@@ -1,0 +1,22 @@
+version: v1.0
+name: Pipeline 12
+blocks:
+  - name: Deploy to Kubernetes
+    task:
+      jobs:
+        - name: 'Job #1'
+          commands:
+            - kubectl apply -f manifests/service.yml
+            - './apply.sh manifests/deployment.yml addressbook-canary 1 $DOCKER__REGISTRY_USERNAME/semaphore-demo-cicd-kubernetes:$SEMAPHORE_WORKFLOW_ID'
+            - if kubectl get deployment addressbook-stable; then kubectl scale --replicas=2 deployment/addressbook-stable; fi
+      secrets:
+        - name: db-params
+        - name: do-key
+        - name: docker
+      env_vars:
+        - name: CLUSTER_NAME
+          value: semaphore-demo-cicd-kubernetes
+agent:
+  machine:
+    type: e1-standard-2
+    os_image: ubuntu1804

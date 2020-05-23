@@ -58,3 +58,8 @@ blocks:
       env_vars:
         - name: DOCKER_REGISTRY_URL
           value: docker.io
+promotions:
+  - name: Canary
+    pipeline_file: pipeline_11.yml
+    auto_promote:
+      when: result = 'passed' and (branch = 'master' or tag =~ '^hotfix*')
