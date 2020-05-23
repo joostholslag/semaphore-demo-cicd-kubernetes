@@ -11,7 +11,7 @@ blocks:
         - name: docker build
           commands:
             - checkout
-            - docker login -u $DOCKER_REGISTRY_USERNAME -p $DOCKER_REGISTRY_PASSWORD $DOCKER_REGISTRY_URL
+            - 'echo "${DOCKER_REGISTRY_PASSWORD}" | docker login -u "${DOCKER_REGISTRY_USERNAME}" --password-stdin'
             - 'docker pull $DOCKER_REGISTRY_URL/joostholslag/semaphore-demo-cicd-kubernetes:latest ||true'
             - 'docker build --cache-from  $DOCKER_REGISTRY_URL/joostholslag/semaphore-demo-cicd-kubernetes:latest -t $DOCKER_REGISTRY_URL/joostholslag/semaphore-demo-cicd-kubernetes:$SEMAPHORE_WORKFLOW_ID .'
             - 'docker push $DOCKER_REGISTRY_URL/joostholslag/semaphore-demo-cicd-kubernetes:$SEMAPHORE_WORKFLOW_ID'
